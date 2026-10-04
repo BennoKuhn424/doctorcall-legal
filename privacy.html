@@ -25,7 +25,7 @@
 <body>
 
 <h1>DoctorCall Privacy Policy</h1>
-<p class="updated">Last updated 7 September 2026</p>
+<p class="updated">Last updated 4 October 2026</p>
 
 <p>
   DoctorCall is a phone directory for South African public hospitals. It lists
@@ -34,10 +34,10 @@
 </p>
 
 <div class="callout">
-  <strong>DoctorCall holds no patient information of any kind.</strong>
-  There is nowhere in the app to record a patient, a diagnosis, a case or a
-  clinical note, and no such field exists in our database. The app is a contact
-  directory for staff.
+  <strong>Do not enter patient information.</strong>
+  DoctorCall is a contact directory for staff, not a patient-record system. We
+  do not request patient records, diagnoses or clinical notes. Listing text and
+  reports must not contain that information; report any inappropriate entry.
 </div>
 
 <h2>Who we are</h2>
@@ -70,20 +70,75 @@
     <strong>Ward and department numbers you add</strong> — shared with everyone
     at that hospital. This is the directory itself.
   </li>
+  <li>
+    <strong>Push notification token</strong> — stored only if you allow
+    notifications, so we can alert you when an on-call role changes hands.
+  </li>
+  <li>
+    <strong>Crash diagnostics</strong> — technical error details are sent to
+    Sentry when the app fails, including when browsing without an account.
+    We disable session replay and breadcrumbs. JavaScript reports exclude
+    raw error messages, request contents, account details and search text;
+    they retain limited technical details used to diagnose failures.
+  </li>
 </ul>
 
-<h2>Verifying that you are a clinician</h2>
+<h2>Directory reports</h2>
+<p>
+  Account blocks store the two account identifiers and the time the block
+  was created. Only the person setting a block can read their block list in the
+  app. Blocks prevent direct handovers between those accounts and hide directory
+  descriptions on listings attributed to a blocked original contributor or a
+  server-recorded editor. The app
+  keeps a private account-scoped copy of affected listing identifiers for offline
+  use. Clinical contact numbers and essential shift alerts remain available.
+  They do not block telephone calls. Blocks remain until removed in the app or
+  either account is deleted. A local copy is cleared when you sign out.
+</p>
+<p>
+  For new directory-description edits, we record the editing account, affected
+  listing and field, and edit time to support blocking and moderation. These
+  attribution records do not duplicate the description text or telephone number.
+  They are available to authorized moderators, not other staff. A field’s record
+  is replaced when that field changes and is removed when its listing or editor
+  account is deleted. Older edits may not have reliable attribution and require
+  manual review.
+</p>
+<p>
+  If you report a directory listing in the app, we store your account identifier,
+  the listing identifier, the selected reason, the time and the review status.
+  Reports are available to you and authorized reviewers, not other users. These
+  account-linked reports are removed when your profile is deleted. Email reports
+  are handled through our support mailbox. Do not include patient information,
+  identity documents or private phone numbers in reports.
+</p>
+
+<h2>Identity verification</h2>
 <p>
   When you register with a professional registration number, we ask you to
   photograph an identity document. This is handled by
   <a href="https://didit.me" rel="noopener">Didit</a>, an identity verification
-  provider, who read the name from the document and confirm it is genuine.
+  provider, which processes the document and returns a verification result.
 </p>
 <p>
-  We compare that name against the public register published by the Health
-  Professions Council of South Africa, and keep only the outcome: whether the
-  registration was found, whether it is active, and the name on it. We do not
-  keep a copy of your identity document, and it is never shown to other users.
+  The document must be scanned live with your phone's camera; uploaded photos
+  are not accepted. While you scan it, Didit also uses your front camera to
+  capture your face and compares it with the photo on the document, to check
+  that the person holding the document is its owner. This comparison involves
+  biometric information, which POPIA treats as special personal information,
+  and it is done only with the consent you give in Didit's verification screen.
+  If the comparison is inconclusive, your verification is held for manual
+  review instead of being approved automatically. DoctorCall receives only your
+  first and last name and the verification result; we never receive your
+  document images or your face image.
+</p>
+<p>
+  We compare the result with your professional registration. Our account records
+  include verification status, relevant name and registration results, provider
+  session references and operation records needed to complete verification or
+  deletion. We do not copy identity-document images into our directory database,
+  and your document is not shown to directory users. Provider processing and
+  storage are separate from what the directory database stores.
 </p>
 <p>
   We do this because the app publishes your phone number to your colleagues,
@@ -95,17 +150,23 @@
 <ul>
   <li>We do not sell your information, and we do not share it for advertising.</li>
   <li>We do not track you across other apps or websites.</li>
-  <li>We do not record your location. The app requests no location permission.</li>
+  <li>The app does not request GPS location permission. Identity-verification providers may process IP addresses and associated network or approximate-location information for verification and fraud checks.</li>
   <li>We do not record who you call. Calls are placed by your own phone, and we never see them.</li>
-  <li>We do not hold patient information.</li>
+  <li>We do not provide a patient-record system. Do not enter patient information into directory contributions or reports.</li>
 </ul>
 
 <h2>Who can see what</h2>
 <p>
-  Your name and number are visible only to verified staff at your own hospital,
-  and only while you hold an on-call role. Ward and department numbers are
-  visible to anyone signed in, because a ward's landline is not private
-  information and nobody should be blocked from reaching a hospital.
+  Verified staff can find colleagues' names when arranging a handover. A live
+  role publishes its listed contact number to verified staff with access to
+  that hospital. Other users cannot browse your private profile or professional
+  registration details. Ending a role removes its number from subsequent live
+  directory updates; a device that is offline may retain its last saved copy
+  until it reconnects. Ward and department numbers are
+  visible without signing in, because a ward's published institutional number
+  is not personal information and nobody should be blocked from reaching a
+  hospital. Guests cannot see profiles, personal mobile numbers, on-call roles,
+  audit identities or unpublished directory entries.
 </p>
 <p>
   These limits are enforced by the database itself, not only by the app.
@@ -113,21 +174,31 @@
 
 <h2>Where your information is stored</h2>
 <p>
-  On servers operated by Supabase, and with our identity verification provider
-  for as long as a verification takes to complete. Where that involves a
-  transfer outside South Africa, it is made under section 72 of POPIA on the
-  basis that the receiving country provides comparable protection.
+  Account and directory information is stored on servers operated by Supabase.
+  Identity verification is processed by Didit. Push delivery is processed by
+  Expo and Apple, and crash diagnostics are processed by Sentry. These providers
+  receive only the information needed to provide their service and are required
+  to protect it. Where processing involves a transfer outside South Africa, it
+  is made under section 72 of POPIA on the basis that the recipient provides
+  comparable protection.
 </p>
 
 <h2>How long we keep it</h2>
 <ul>
   <li>Your account, for as long as you keep it.</li>
   <li>
-    Records of on-call shifts, briefly, so that a disputed handover can be
-    resolved. We deliberately do not keep a long-term record of where you have
-    been or when.
+    Records of on-call shifts are retained with your account for resolving
+    disputed handovers. Ended shifts are not available in other staff's live
+    directory. These records are removed when your profile is deleted.
   </li>
   <li>The outcome of your registration check, so we do not have to repeat it.</li>
+  <li>
+    Identity verification data held by Didit, including document and face
+    images, for up to one month, after which Didit deletes it. Deleting your
+    account also asks Didit to delete your verification session.
+  </li>
+  <li>Push tokens until you delete your account or the token is replaced.</li>
+  <li>Crash diagnostics according to Sentry's configured retention period.</li>
 </ul>
 
 <h2>Your rights</h2>
@@ -135,7 +206,13 @@
 <p>
   <strong>You can delete your account from inside the app at any time</strong> —
   open <em>Account</em> at the top of the main screen. This removes your name,
-  your number and any on-call role you hold, immediately and without asking us.
+  your number and any on-call role you hold from our active account database
+  after deletion succeeds. Deletion first requests removal of verification data
+  and can remain pending if the provider cannot confirm it or an identity check
+  is still finishing. Contact our support address if retrying does not resolve
+  the problem. Other devices update their saved copies when they
+  next synchronize. If deletion fails, the app tells you rather than claiming
+  that your account was removed.
 </p>
 <p>
   Ward and department numbers you contributed remain in the directory. They
